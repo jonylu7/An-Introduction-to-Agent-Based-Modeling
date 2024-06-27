@@ -1,77 +1,80 @@
-
-turtles-own [friend enemy]
-
-
-to setUp
+turtles-own [wealth]
+to setup
   clear-all
-  ask patches[set pcolor white]
-  create-turtles number[
-  setxy random-xcor random-ycor
-    if(personalities = "cowards")[set color blue]
-    if(personalities = "heros")[set color red]
-    if(personalities = "mixed")[set color one-of [red blue]]
-
-    set friend one-of other turtles
-    set enemy one-of other turtles
-    create-link-with friend [set color green]
-    create-link-with enemy [set color red]
-
+  create-turtles 500 [
+  set wealth 300
+  set shape "circle"
+  set color green
+  set size 2
+  setxy wealth random-ycor
   ]
   reset-ticks
 End
 
 to go
-  ask turtles[
-    if(color = red)[act-bravely]
-    if(color = blue)[act-cowardly]
-  ]
+  ask turtles with [wealth > 0] [transact]
+  ask turtles [if (wealth <= max-pxcor)[set xcor wealth]]
   tick
 End
 
-to act-bravely
-  facexy([xcor]of friend + [xcor] of enemy ) / 2 ([ycor] of friend + [ycor] of enemy ) / 2
-  fd 1.0
-End
 
-to act-cowardly
-  facexy([xcor]of friend + ([xcor]of friend - [xcor] of enemy) ) / 2 ([ycor] of friend + ([ycor]of friend - [ycor] of enemy) ) / 2
-  fd 1.0
+to transact
+  set wealth wealth - 1
+  ask one-of other turtles [set wealth wealth + 1]
 End
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-953
-754
+719
+60
 -1
 -1
-50.0
+1.0
 1
-1
-1
-1
-1
-0
-0
-0
-1
--10
 10
--10
-10
+1
+1
+1
 0
+1
+1
+1
 0
+500
+0
+40
+1
+1
 1
 ticks
-60.0
+30.0
+
+PLOT
+162
+417
+698
+655
+wealth distribution
+NIL
+NIL
+0.0
+500.0
+0.0
+40.0
+false
+true
+"" ""
+PENS
+"current" 1.0 1 -2674135 true "" "histogram [wealth] of turtles"
 
 BUTTON
-14
-225
-80
-258
+157
+199
+223
+232
+NIL
 setup
-setUp\n
 NIL
 1
 T
@@ -82,39 +85,14 @@ NIL
 NIL
 1
 
-CHOOSER
-31
-154
-169
-199
-personalities
-personalities
-"cowards" "heros" "mixed"
-0
-
-SLIDER
-19
-100
-191
-133
-number
-number
-0
-100
-82.0
-1
-1
-NIL
-HORIZONTAL
-
 BUTTON
-16
-293
-79
-326
+186
+319
+249
+352
 NIL
 go
-NIL
+T
 1
 T
 OBSERVER
