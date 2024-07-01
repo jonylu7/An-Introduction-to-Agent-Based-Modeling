@@ -5,9 +5,10 @@ to go
   [stop]
   ask firePatches [
     ask neighbors4 with [ pcolor = green][
-      set pcolor red
-      ]
-    ]
+      if (random 100 < probability_to_spread)
+      [set pcolor red]
+  ]
+  ]
 
  set fireProportion (count firePatches / initalTreeCounts )* 100
 tick
@@ -109,7 +110,7 @@ density
 62.0
 1
 1
-NIL
+%
 HORIZONTAL
 
 MONITOR
@@ -126,13 +127,28 @@ initalTreeCounts
 MONITOR
 47
 463
-148
+176
 508
-NIL
+burned proportion
 fireProportion
 4
 1
 11
+
+SLIDER
+11
+256
+212
+289
+probability_to_spread
+probability_to_spread
+0
+100
+50.0
+1
+1
+%
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?

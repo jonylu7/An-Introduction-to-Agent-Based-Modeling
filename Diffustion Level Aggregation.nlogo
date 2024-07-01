@@ -1,138 +1,31 @@
 
-globals [initalTreeCounts fireProportion]
-to go
-  if all? patches [pcolor = red]
-  [stop]
-  ask firePatches [
-    ask neighbors4 with [ pcolor = green][
-      set pcolor red
-      ]
-    ]
-
- set fireProportion (count firePatches / initalTreeCounts )* 100
-tick
-End
-
-
-to setup
-  clear-all
-  ask patches [
-  if (random 100 < density)
-  [set pcolor green]
-
-  if (pxcor = min-pxcor)
-  [set pcolor red]
-  ]
-
-  set initalTreeCounts count treePatches
-  reset-ticks
-End
-
-to-report firePatches
-  report patches with [ pcolor = red ]
-end
-
-to-report treePatches
-  report patches with [ pcolor = green ]
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-821
-622
+647
+448
 -1
 -1
-3.0
+13.0
 1
 10
 1
 1
 1
 0
+1
+1
+1
+-16
+16
+-16
+16
 0
 0
-1
--100
-100
--100
-100
-1
-1
 1
 ticks
 30.0
-
-BUTTON
-36
-54
-102
-87
-NIL
-setup
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-41
-114
-104
-147
-NIL
-go
-T
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-SLIDER
-15
-191
-187
-224
-density
-density
-0
-100
-62.0
-1
-1
-NIL
-HORIZONTAL
-
-MONITOR
-37
-374
-153
-419
-NIL
-initalTreeCounts
-17
-1
-11
-
-MONITOR
-47
-463
-148
-508
-NIL
-fireProportion
-4
-1
-11
 
 @#$#@#$#@
 ## WHAT IS IT?

@@ -5,9 +5,45 @@ to go
   [stop]
   ask firePatches [
     ask neighbors4 with [ pcolor = green][
-      set pcolor red
+      let probability probability_to_spread
+      let direction towards myself
+
+      if(direction = 0) [
+      set probability probability - south-wind-speed
       ]
-    ]
+
+      if(direction = 90)[
+      set probability probability - west-wind-speed
+      ]
+
+      if(direction = 180 )[
+      set probability probability + south-wind-speed
+      ]
+
+      if(direction = 270)[
+      set probability probability + west-wind-speed
+      ]
+
+
+      if (random 100 < probability)
+      [set pcolor red
+        if BigJumps [
+        let target patch-at ( west-wind-speed / 5)( south-wind-speed / 5)
+          if target != nobody and [pcolor] of target = green [
+            ask target [
+            set pcolor red
+            ]
+
+          ]
+
+        ]
+
+
+
+
+      ]
+  ]
+  ]
 
  set fireProportion (count firePatches / initalTreeCounts )* 100
 tick
@@ -106,17 +142,17 @@ density
 density
 0
 100
-62.0
+71.0
 1
 1
-NIL
+%
 HORIZONTAL
 
 MONITOR
-37
-374
-153
-419
+30
+533
+146
+578
 NIL
 initalTreeCounts
 17
@@ -124,15 +160,71 @@ initalTreeCounts
 11
 
 MONITOR
-47
-463
-148
-508
-NIL
+27
+606
+156
+651
+burned proportion
 fireProportion
 4
 1
 11
+
+SLIDER
+11
+256
+212
+289
+probability_to_spread
+probability_to_spread
+0
+100
+18.0
+1
+1
+%
+HORIZONTAL
+
+SLIDER
+28
+343
+200
+376
+south-wind-speed
+south-wind-speed
+-25
+25
+25.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+30
+410
+202
+443
+west-wind-speed
+west-wind-speed
+-25
+25
+-6.0
+1
+1
+NIL
+HORIZONTAL
+
+SWITCH
+920
+92
+1033
+125
+BigJumps
+BigJumps
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
